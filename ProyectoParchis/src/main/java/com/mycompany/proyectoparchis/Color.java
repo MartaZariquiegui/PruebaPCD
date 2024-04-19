@@ -14,6 +14,7 @@ public enum Color {
     AZUL,
     VERDE,
     AMARILLO,
-    MORADO;
+    MORADO,
+    TURQUESA;
     
 }
