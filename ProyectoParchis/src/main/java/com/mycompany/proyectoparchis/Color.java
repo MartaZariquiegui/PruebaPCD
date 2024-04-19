@@ -13,8 +13,6 @@ public enum Color {
     ROJO,
     AZUL,
     VERDE,
-    AMARILLO,
-    MORADO,
-    TURQUESA;
+    AMARILLO;
     
 }
