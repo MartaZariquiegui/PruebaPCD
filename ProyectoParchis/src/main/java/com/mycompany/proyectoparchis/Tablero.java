@@ -39,7 +39,7 @@ public class Tablero {
         }
     }
     
-    public void ocuparCasilla(int casillasMover){
+    public void ocuparCasilla(int casillasMover, Color color){
         
     }
 
