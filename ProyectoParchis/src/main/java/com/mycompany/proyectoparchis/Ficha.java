@@ -4,6 +4,9 @@
  */
 package com.mycompany.proyectoparchis;
 
+import static com.mycompany.proyectoparchis.Color.AZUL;
+import java.util.HashMap;
+
 /**
  *
  * @author martazariquiegui
@@ -18,6 +21,7 @@ public class Ficha {
     private int casilla;
     private boolean enCasa;
     private boolean comible;
+    private boolean estaPasillo=false;
 
     public Ficha(Color color, Tablero tablero) { // cada vez que creamos una ficha está en casa y no se puede comer
         this.tablero = tablero;
@@ -94,21 +98,62 @@ public class Ficha {
         return posicionFinal%68;
     }
     
-    public void moverFicha(int posInicial, int posiciones){
-        if (posiciones==0){
-            mandarFichaACasa();
+    public void moverFicha(Jugador jugador, int posInicial, int posiciones){
+        
+        int nueva_posicion = entra_pasillo(jugador.getNumero(), posiciones);
+        if (estaPasillo==false) {
+            if (posiciones==0){
+                mandarFichaACasa();
+            }
+            int posFinal = nuevaPos(posInicial, posiciones);
+            //actualizamos el estado del tablero
+            tablero.ocuparCasilla(posFinal, color); //ya actualiza la posicion del color
+            tablero.quitarFichaDeCasilla(posInicial); //en la función no movemos el color porque se hace en ocuparCasilla
+            //actualizamos el estado de la ficha
+            casilla = posFinal; 
+            comible = !tablero.esSeguro(casilla);
+            //tengo que ver si no sobrepasa el numero para entrar en el pasillo
+        } else { //si esta en pasillo
+            if (nueva_posicion>=8)
+                System.out.println("¡Enhorabuena jugador "+jugador.getColor()+" has ganado la partida!");
+            //falta hacer que el juego termine aqui???
+            else {
+                System.out.println("Sigue tirando, te quedan solo "+(8-nueva_posicion)+" casilllas!");
+            }
         }
-        int posFinal = nuevaPos(posInicial, posiciones);
-        //actualizamos el estado del tablero
-        tablero.ocuparCasilla(posFinal, color); //ya actualiza la posicion del color
-        tablero.quitarFichaDeCasilla(posInicial); //en la función no movemos el color porque se hace en ocuparCasilla
-        //actualizamos el estado de la ficha
-        casilla = posFinal; 
-        comible = !tablero.esSeguro(casilla);
     }
-    
     public void mandarFichaACasa(){
         
     }
+    
+    
+    public int entra_pasillo (int numJugador, int posiciones) {
+        int nueva_posicion = casilla+posiciones;
+        switch (numJugador) {
+            case 1:
+                if (nueva_posicion>67) {
+                    estaPasillo=true;
+                    nueva_posicion = nueva_posicion - 67;
+                } break;
+            case 2:
+                if (nueva_posicion>50) {
+                    estaPasillo=true;
+                    nueva_posicion = nueva_posicion - 50;
+                } break;
+            case 3:
+                if (nueva_posicion>33) {
+                    estaPasillo=true;
+                    nueva_posicion = nueva_posicion - 33;
+                } break;
+            case 4:
+                if (nueva_posicion>16) {
+                    estaPasillo=true;
+                    nueva_posicion = nueva_posicion - 16;
+                } break;
+        }
+        return nueva_posicion;
+    }
 
+    
+    
 }
