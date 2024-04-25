@@ -9,7 +9,6 @@ package com.mycompany.proyectoparchis;
  * @author alumno
  */
 public enum Color {
-    
     ROJO,
     AZUL,
     VERDE,
