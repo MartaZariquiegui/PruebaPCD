@@ -10,16 +10,43 @@ package com.mycompany.proyectoparchis;
  */
 public class Jugador {
 
-    private Jugador jugador;
+    private int numero;
+    private String nombre;
     private Color color;
 
-    public Jugador(Jugador jugador, Color color) {
-        this.jugador = jugador;
+    public Jugador(int numero, String nombre, Color color) {
+        this.numero = numero;
+        this.nombre = nombre;
         this.color = color;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public Color getColor() {
         return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    @Override
+    public String toString() {
+        return "Jugador{" + "nombre=" + nombre + ", color=" + color + '}';
     }
 
 }
