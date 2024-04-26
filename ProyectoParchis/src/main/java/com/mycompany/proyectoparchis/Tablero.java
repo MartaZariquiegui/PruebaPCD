@@ -71,4 +71,18 @@ public class Tablero {
         }
     }
     
+    public Color getColorDeUnaFicha(int pos){
+       Color color = null;
+        for(int posicion : posiciones.values()){
+           if(posicion == pos){
+               for (Color col : posiciones.keySet()){
+                    if (posiciones.get(col) == posicion){
+                        color = col;
+                    }
+                }
+           }
+       }
+        return color;
+    }
+    
 }

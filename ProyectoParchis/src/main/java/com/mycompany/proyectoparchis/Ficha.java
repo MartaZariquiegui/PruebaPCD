@@ -110,13 +110,18 @@ public class Ficha {
                 mandarFichaACasa();//Significa que habra sacado 3 veces seguidad dados dobles.
             }
             int posFinal = nuevaPos(posInicial, posiciones);
-            //actualizamos el estado del tablero
-            tablero.ocuparCasilla(posFinal, color); //ya actualiza la posicion del color
-            tablero.quitarFichaDeCasilla(posInicial); //en la función no movemos el color porque se hace en ocuparCasilla
-            //actualizamos el estado de la ficha
-            casilla = posFinal; 
-            comible = !tablero.esSeguro(casilla);
-            //tengo que ver si no sobrepasa el numero para entrar en el pasillo
+            if(comerFicha(posFinal)){
+                tablero.quitarFichaDeCasilla(posInicial);
+            }
+            else{
+                //actualizamos el estado del tablero
+                tablero.ocuparCasilla(posFinal, color); //ya actualiza la posicion del color
+                tablero.quitarFichaDeCasilla(posInicial); //en la función no movemos el color porque se hace en ocuparCasilla
+                //actualizamos el estado de la ficha
+                casilla = posFinal; 
+                comible = !tablero.esSeguro(casilla);
+                //tengo que ver si no sobrepasa el numero para entrar en el pasillo
+            }   
         } else { //si esta en pasillo
             if (nueva_posicion>=8)
                 System.out.println("¡Enhorabuena jugador "+jugador.getColor()+" has ganado la partida!");
@@ -134,9 +139,13 @@ public class Ficha {
         comible = false; 
     }
     
-    public void comerFicha(int posicionFinal) {
-        if( tablero.getEstadoCasilla(posicionFinal) == 1){
+    public boolean comerFicha(int posicionFinal) {
+        if(tablero.getEstadoCasilla(posicionFinal) == 1 && tablero.getColorDeUnaFicha(posicionFinal).equals(getColor())){
             mandarFichaACasa();
+            return true;
+        }
+        else{
+            return false;
         }
     }
     
