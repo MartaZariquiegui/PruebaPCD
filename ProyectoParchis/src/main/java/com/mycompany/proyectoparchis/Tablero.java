@@ -54,6 +54,10 @@ public class Tablero {
         }
     }
     
+    public int getEstadoCasilla(int indice) {
+        return casillas[indice];
+    }
+    
     public boolean hayBarrera(int casilla){
         return barreras.contains(casilla);
     }

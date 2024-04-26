@@ -22,12 +22,15 @@ public class Ficha {
     private boolean enCasa;
     private boolean comible;
     private boolean estaPasillo=false;
+    
+    //private Casa casa;
 
     public Ficha(Color color, Tablero tablero) { // cada vez que creamos una ficha está en casa y no se puede comer
         this.tablero = tablero;
         this.color = color;
         this.enCasa = true;
         this.comible = false;
+        this.estaPasillo=false;
     }
 
     public Color getColor() {
@@ -62,8 +65,9 @@ public class Ficha {
         this.comible = comible;
     }
     
-    public void sacarFicha(int numJugador){
+    public void sacarFichaDeCasa(int numJugador){
         enCasa = false;
+        //casa.eliminarDeCasa(this);
         switch (numJugador) {
             case 1:
                 casilla=4;
@@ -103,7 +107,7 @@ public class Ficha {
         int nueva_posicion = entra_pasillo(jugador.getNumero(), posiciones);
         if (estaPasillo==false) {
             if (posiciones==0){
-                mandarFichaACasa();
+                mandarFichaACasa();//Significa que habra sacado 3 veces seguidad dados dobles.
             }
             int posFinal = nuevaPos(posInicial, posiciones);
             //actualizamos el estado del tablero
@@ -122,10 +126,19 @@ public class Ficha {
             }
         }
     }
+    
     public void mandarFichaACasa(){
-        
+        //casa.meterFichaEnACasa(this);
+        casilla = 0;
+        enCasa = true;
+        comible = false; 
     }
     
+    public void comerFicha(int posicionFinal) {
+        if( tablero.getEstadoCasilla(posicionFinal) == 1){
+            mandarFichaACasa();
+        }
+    }
     
     public int entra_pasillo (int numJugador, int posiciones) {
         int nueva_posicion = casilla+posiciones;
