@@ -123,14 +123,16 @@ public class Ficha {
                 //tengo que ver si no sobrepasa el numero para entrar en el pasillo
             }   
         } else { //si esta en pasillo
-            if (nueva_posicion>=8)
+            if (nueva_posicion>=8){
                 System.out.println("¡Enhorabuena jugador "+jugador.getColor()+" has ganado la partida!");
             //falta hacer que el juego termine aqui???
-            else {
+                tablero = null;
+            }else {
                 System.out.println("Sigue tirando, te quedan solo "+(8-nueva_posicion)+" casilllas!");
             }
         }
     }
+    
     
     public void mandarFichaACasa(){
         //casa.meterFichaEnACasa(this);
@@ -176,6 +178,13 @@ public class Ficha {
         return nueva_posicion;
     }
 
-    
+    public void mostrarDatos(Tablero tablero){
+        System.out.println("Color: " + getColor());
+        if(casilla == 0){
+            System.out.println("Casilla: La ficha está en casa");
+        }else{
+            System.out.println("Casillas: " + casilla);
+        }
+    }
     
 }

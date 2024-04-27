@@ -13,11 +13,15 @@ public class Jugador {
     private int numero;
     private String nombre;
     private Color color;
+    private Ficha ficha;
+    private Tablero tablero;
 
-    public Jugador(int numero, String nombre, Color color) {
+    public Jugador(int numero, String nombre, Color color, Ficha ficha, Tablero tablero) {
         this.numero = numero;
         this.nombre = nombre;
         this.color = color;
+        this.ficha = ficha;
+        this.tablero = tablero;
     }
 
     public String getNombre() {
@@ -48,5 +52,10 @@ public class Jugador {
     public String toString() {
         return "Jugador{" + "nombre=" + nombre + ", color=" + color + '}';
     }
-
+    
+    public void mostrarResumen(int numJugador){
+        System.out.println("Jugador: " + numJugador);
+        ficha.mostrarDatos(tablero);
+    }
+    
 }
