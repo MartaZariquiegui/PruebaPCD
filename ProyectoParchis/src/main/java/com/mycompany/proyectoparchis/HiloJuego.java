@@ -64,12 +64,12 @@ public class HiloJuego implements Runnable {
         }
         if (casa.casaVacia()){
             int posicionfinal = ficha.getCasilla() + tirada;
-            Color colorPorSiAcaso = tablero.getColor
+            Color colorPorSiAcaso = tablero.getColorDeUnaFicha(posicionFinal);
             ficha.moverFicha(jugador, ficha.getCasilla(), tirada);
             if ((ficha.comerFicha(posicionfinal)) == true) {
                 ficha.mandarFichaACasa();
                 for (PrintWriter writer : Servidor.getWriters()) {
-                    writer.println(jugador.getNombre() + " ha comido a otra ficha."); //???? COMO INDICO A QUIEN COME
+                    writer.println(jugador.getNombre() + " ha comido a la ficha de color " + colorPorSiAcaso.toString()); //???? COMO INDICO A QUIEN COME
                 }
             }
                 //FALTA BARRERA Y DEMAS
