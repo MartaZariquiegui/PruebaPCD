@@ -35,4 +35,23 @@ public class Dado {
         System.out.println("Tras tres tiradas con numeros repetidos la ficha se va a casa");
         return 0;
     }
+    
+    public int[] tirada_separada() {
+        int posiciones = 0;
+        for (int j=0; j<3; j++){
+            for (int i = 0; i < numDados; i++) {
+                numeros[i] = random.nextInt(numeroMax) + 1;
+                posiciones+=numeros[i];
+            }
+            System.out.println("En el dado 1 tenemos el numero: " + numeros[0] + " y en el dado 2 el numero: " + numeros[1]);
+            if (numeros[0]!=numeros[1]){
+                System.out.println("La ficha avanza " + posiciones + "posiciones");
+                return numeros;
+            }else{
+                System.out.println("Como los numeros en ambos dados son iguales se lanza otra vez");
+            }
+        }
+        System.out.println("Tras tres tiradas con numeros repetidos la ficha se va a casa");
+        return new int[0];
+    }
 }

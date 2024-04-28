@@ -20,6 +20,7 @@ public class Ficha {
     private Color color;
     private int casilla;
     private boolean enCasa;
+    private boolean ganar=false;
     private boolean comible;
     private boolean estaPasillo=false;
     
@@ -57,6 +58,15 @@ public class Ficha {
         this.enCasa = enCasa;
     }
 
+    public boolean isGanar() {
+        return ganar;
+    }
+
+    public void setGanar(boolean ganar) {
+        this.ganar = ganar;
+    }
+    
+    
     public boolean isComible() {
         return comible;
     }
@@ -125,7 +135,7 @@ public class Ficha {
         } else { //si esta en pasillo
             if (nueva_posicion>=8){
                 System.out.println("¡Enhorabuena jugador "+jugador.getColor()+" has ganado la partida!");
-                //falta hacer que el juego termine aqui???
+                ganar=true;
                 tablero = null;
             }else {
                 System.out.println("Sigue tirando, te quedan solo "+(8-nueva_posicion)+" casilllas!");

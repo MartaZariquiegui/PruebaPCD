@@ -13,7 +13,7 @@ import java.util.ArrayList;
 //TRABAJO PARCHIS, ANA, ELENA Y MARTA
 //clases: tablero, dado (hecho), jugador, ficha?? 
 public class Parchis {
-
+/*
     private Tablero tablero;
     private int nJugadores;
     private Jugador jugadorActual;
@@ -35,7 +35,7 @@ public class Parchis {
      * color que cada jugador quiera.
      *
      * @param ninguno
-     */
+     
     public void addJugadores() {
         vista.welcolme();
         Scanner sc = new Scanner(System.in);
@@ -70,7 +70,7 @@ public class Parchis {
      * Bucle principal del juego en el cual se suceden las tiradas del dado y se
      * piden por consola las decisiones que el jugador puede tomar.
      *
-     */
+     
 
     public void play() {
         ArrayList<Casilla> listaCasillasConFichas;
@@ -106,7 +106,7 @@ public class Parchis {
     /**
      * Función que comprueba si el jugador ha ganado
      *
-     */
+     
     public boolean end() {
 
         if (this.tablero.getPasillo().get(7).getFichas().size() == 4) {
@@ -115,5 +115,5 @@ public class Parchis {
         } else {
             return false;
         }
-    }
+    }*/
 }
