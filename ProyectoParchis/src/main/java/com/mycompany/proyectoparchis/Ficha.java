@@ -4,9 +4,6 @@
  */
 package com.mycompany.proyectoparchis;
 
-import static com.mycompany.proyectoparchis.Color.AZUL;
-import java.util.HashMap;
-
 /**
  *
  * @author martazariquiegui

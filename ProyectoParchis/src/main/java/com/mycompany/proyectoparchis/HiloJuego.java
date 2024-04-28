@@ -12,56 +12,68 @@ import java.net.Socket;
  * @author ELENA
  */
 public class HiloJuego implements Runnable {
+
     private Socket socket;
     private Jugador jugador;
     private Ficha ficha;
     private Dado dados;
     private Tablero tablero;
-    Casa casaJugador = new Casa (1,jugador.getColor(),tablero); //se juega con una ficha
+    private Casa casa;
 
-    public HiloJuego(Socket socket, Jugador jugador, Ficha ficha, Dado dados){
+    public HiloJuego(Socket socket, Jugador jugador, Ficha ficha, Dado dados, Casa casa) {
         this.socket = socket;
         this.jugador = jugador;
+        this.ficha = ficha;
         this.dados = dados;
+        this.casa = casa;
     }
-    
+
     @Override
     public void run() {
         for (PrintWriter writer : Servidor.getWriters()) {
             writer.println("Es el turno de " + jugador.getNombre());
         }
-        int tirada = dados.tirada();
-            for (PrintWriter writer : Servidor.getWriters()) {
-                writer.println(jugador.getNombre() + " ha sacado " + tirada);
+        int[] tiradaseparada = dados.tirada_separada(); 
+        int tirada = tiradaseparada[0]+tiradaseparada[1];
+        
+        if (casa.casaVacia() == false) { //si todavia tengo que sacar la ficha de casa
+
+            boolean num5 = false;
+            if ((tiradaseparada[0]+tiradaseparada[1])==5){
+                num5 = true;
+            }else{
+                for (int i = 0; i < tiradaseparada.length; i++) {
+                    if (tiradaseparada[i] == 5) {
+                        num5 = true;
+                    }
+                }
             }
-        if (casaJugador.casaVacia()!=true) { //si todavia tengo que sacar la ficha de casa
             
-            int[] tiradaseparada = dados.tirada_separada();
-            boolean num5=false;
-            for (int i=0;i<tiradaseparada.length;i++) {
-                if (tiradaseparada[i]==5)
-                    num5=true;
-            }
-            
-            if (num5==true) {
+            if (num5 == true) {
                 ficha.sacarFichaDeCasa(jugador.getNumero());
+                casa.eliminarDeCasa(ficha);
+                tirada -= 5;
                 for (PrintWriter writer : Servidor.getWriters()) {
-                    writer.println(jugador.getNombre()+" ha sacado su ficha de casa.");
+                    writer.println(jugador.getNombre() + " ha sacado su ficha de casa.");
                 }
             } else {
                 for (PrintWriter writer : Servidor.getWriters()) {
-                    writer.println(jugador.getNombre()+" no ha sacado su ficha de casa.");
-                }
-            int posicionfinal = ficha.getCasilla()+tirada;
-            ficha.moverFicha(jugador, ficha.getCasilla(), tirada);
-            if ((ficha.comerFicha(posicionfinal))==true) {
-                ficha.mandarFichaACasa();
-                for (PrintWriter writer : Servidor.getWriters()) {
-                    writer.println(jugador.getNombre()+" ha comido a otra ficha."); //???? COMO INDICO A QUIEN COME
+                    writer.println(jugador.getNombre() + " no ha conseguido sacar su ficha de casa.");
                 }
             }
-            //FALTA BARRERA Y DEMAS
+        }
+        if (casa.casaVacia()){
+            int posicionfinal = ficha.getCasilla() + tirada;
+            ficha.moverFicha(jugador, ficha.getCasilla(), tirada);
+            if ((ficha.comerFicha(posicionfinal)) == true) {
+                ficha.mandarFichaACasa();
+                for (PrintWriter writer : Servidor.getWriters()) {
+                    writer.println(jugador.getNombre() + " ha comido a otra ficha."); //???? COMO INDICO A QUIEN COME
+                }
+            }
+                //FALTA BARRERA Y DEMAS
         }
         ficha.mostrarDatos(tablero);
+        
     }
 }
