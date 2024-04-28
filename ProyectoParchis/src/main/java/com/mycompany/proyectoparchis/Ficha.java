@@ -125,7 +125,7 @@ public class Ficha {
         } else { //si esta en pasillo
             if (nueva_posicion>=8){
                 System.out.println("¡Enhorabuena jugador "+jugador.getColor()+" has ganado la partida!");
-            //falta hacer que el juego termine aqui???
+                //falta hacer que el juego termine aqui???
                 tablero = null;
             }else {
                 System.out.println("Sigue tirando, te quedan solo "+(8-nueva_posicion)+" casilllas!");
