@@ -52,11 +52,6 @@ public class HiloJuego implements Runnable {
                 for (PrintWriter writer : Servidor.getWriters()) {
                     writer.println(jugador.getNombre()+" no ha sacado su ficha de casa.");
                 }
-            }
-        } else { //si la ficha ya esta fuera
-            /*for (PrintWriter writer : Servidor.getWriters()) {
-                    writer.println(jugador.getNombre()+" estaba en "+ficha.getCasilla()+" y ahora esta en "+(ficha.getCasilla()+tirada));
-            }*/
             int posicionfinal = ficha.getCasilla()+tirada;
             ficha.moverFicha(jugador, ficha.getCasilla(), tirada);
             if ((ficha.comerFicha(posicionfinal))==true) {
