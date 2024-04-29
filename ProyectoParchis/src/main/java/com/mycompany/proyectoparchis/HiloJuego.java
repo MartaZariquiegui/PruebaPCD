@@ -64,7 +64,7 @@ public class HiloJuego implements Runnable {
         }
         if (casa.casaVacia()){
             int posicionfinal = ficha.getCasilla() + tirada;
-            Color colorPorSiAcaso = tablero.getColorDeUnaFicha(posicionFinal);
+            Color colorPorSiAcaso = tablero.getColorDeUnaFicha(posicionfinal);
             ficha.moverFicha(jugador, ficha.getCasilla(), tirada);
             if ((ficha.comerFicha(posicionfinal)) == true) {
                 ficha.mandarFichaACasa();
