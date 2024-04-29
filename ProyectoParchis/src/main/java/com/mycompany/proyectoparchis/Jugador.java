@@ -15,6 +15,7 @@ public class Jugador {
     private Color color;
     private Ficha ficha;
     private Tablero tablero;
+    private int[] limites = {68,17,34,51};
 
     public Jugador(int numero, String nombre, Color color, Ficha ficha, Tablero tablero) {
         this.numero = numero;
@@ -47,15 +48,15 @@ public class Jugador {
     public void setNumero(int numero) {
         this.numero = numero;
     }
+    
+    public int getLimite(){
+        return limites[numero-1];
+    }
 
     @Override
     public String toString() {
         return "Jugador{" + "nombre=" + nombre + ", color=" + color + '}';
     }
     
-    public void mostrarResumen(int numJugador){
-        System.out.println("Jugador: " + numJugador);
-        ficha.mostrarDatos(tablero);
-    }
     
 }
