@@ -37,7 +37,7 @@ public class Servidor {
             colores.add(color);
         }
         List<Socket> sockets = new ArrayList<>(); //lista para almacenar los sockets de los jugadores
-
+        
         try {
             ServerSocket serversocket = new ServerSocket(44444);
             for (int i = 0; i < 4; i++) {
@@ -47,6 +47,7 @@ public class Servidor {
                 sockets.add(jugadorsocket);
                 Ficha ficha = new Ficha(colores.get(i),tablero);
                 fichas.add(ficha);
+                tablero.meterClaveValor(ficha);
                 Casa casa = new Casa(1, colores.get(i),tablero);
                 casas.add(casa);
                 

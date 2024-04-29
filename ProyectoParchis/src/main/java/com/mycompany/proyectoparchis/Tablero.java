@@ -15,7 +15,7 @@ public class Tablero {
     //en esta clase guardamos el estado de las casillas, en cuales hay barreras y la posicion actual de las fichas
     
     private int[] casillas = new int[68];
-    private HashMap<Color, Integer> posiciones = new HashMap<>();
+    private HashMap<Ficha, Integer> posiciones = new HashMap<>();
     private int[] seguros = {4,11,16,21,28,33,38,45,50,55,62,67};
     private ArrayList<Integer> barreras = new ArrayList<>();
     
@@ -23,9 +23,11 @@ public class Tablero {
         for(int i=0; i<68; i++){
             casillas[i] = 0;
         }
-        for (Color color : Color.values()){
-            posiciones.put(color, null);
-        }
+    }
+    
+    public void meterClaveValor(Ficha ficha){
+        posiciones = new HashMap<>();
+        posiciones.put(ficha, ficha.getCasilla());
     }
     
     public boolean esSeguro(int casilla){
@@ -52,13 +54,18 @@ public class Tablero {
         return fichaAux;
     }
     
-    public boolean comerFichaTablero(int posicionFinal, Color colorFichaMoviendo) {
+    public boolean comerFichaTablero(int posicionFinal) {
         boolean comer = false;
         if(getEstadoCasilla(posicionFinal) == 1 && !esSeguro(posicionFinal) ){  //lo compruebo dos veces??? pq en ocuparCasilla tambien lo compruebo, pero no lo puedo quitar pq en moverFicha tambien utilizo sin comprobar
-            if(!getColorDeUnaFicha(posicionFinal).equals(colorFichaMoviendo)){
-                Ficha fichaAux = getFichaDeCasilla(posicionFinal);
-                fichaAux.mandarFichaACasa();
-                comer = true;
+            for(Ficha ficha : posiciones.keySet()){
+                for(int pos : posiciones.values()){
+                    if (pos == posicionFinal){
+                        if(!getColorDeUnaFicha(posicionFinal).equals(ficha.getColor())){
+                            ficha.mandarFichaACasa();
+                            comer = true;
+                        }
+                    }
+                }
             }
         }
         return comer;
@@ -66,18 +73,18 @@ public class Tablero {
     
     
 
-    public void ocuparCasilla(int casilla, Color color){
+    public void ocuparCasilla(int casilla, Ficha ficha){
         if (casillas[casilla]==0){
             casillas[casilla]=1;
-            posiciones.put(color, casilla);
+            posiciones.put(ficha, casilla);
         }else if ((casillas[casilla]==1) && (esSeguro(casilla))){
             casillas[casilla]=2;
             barreras.add(casilla);
-            posiciones.put(color, casilla);
+            posiciones.put(ficha, casilla);
         }else if((casillas[casilla]==1) && (!esSeguro(casilla))){
             //comerFicha
-            comerFichaTablero(casilla, color);
-            posiciones.put(color, casilla);
+            comerFichaTablero(casilla);
+            posiciones.put(ficha, casilla);
         }else{
             System.out.println("No se puede ocupar esta casilla");
         }
@@ -101,16 +108,14 @@ public class Tablero {
     }
     
     public Color getColorDeUnaFicha(int pos){
-       Color color = null;
-        for(int posicion : posiciones.values()){
-           if(posicion == pos){
-               for (Color col : posiciones.keySet()){
-                    if (posiciones.get(col) == posicion){
-                        color = col;
-                    }
+        Color color = null;
+        for(Ficha ficha : posiciones.keySet()){
+            for(int posicion : posiciones.values()){
+                if (posicion == pos){
+                    color = ficha.getColor();
                 }
-           }
-       }
+            }
+        }
         return color;
     }
     

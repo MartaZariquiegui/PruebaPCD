@@ -105,19 +105,19 @@ public class Ficha {
         switch (numJugador) {
             case 1:
                 casilla = 4;
-                tablero.ocuparCasilla(4, color);
+                tablero.ocuparCasilla(4, this);
                 break;
             case 2:
                 casilla = 21;
-                tablero.ocuparCasilla(21, color);
+                tablero.ocuparCasilla(21, this);
                 break;
             case 3:
                 casilla = 38;
-                tablero.ocuparCasilla(38, color);
+                tablero.ocuparCasilla(38, this);
                 break;
             case 4:
                 casilla = 55;
-                tablero.ocuparCasilla(55, color);
+                tablero.ocuparCasilla(55, this);
                 break;
             default:
                 System.out.println("Jugador no válido");
@@ -144,7 +144,7 @@ public class Ficha {
                 mandarFichaACasa();//Significa que habra sacado 3 veces seguidad dados dobles.
             }
             //actualizamos el estado del tablero
-            tablero.ocuparCasilla(posFinal, color); //ya actualiza la posicion del color
+            tablero.ocuparCasilla(posFinal, this); //ya actualiza la posicion del color
             tablero.quitarFichaDeCasilla(posInicial); //en la función no movemos el color porque se hace en ocuparCasilla
             //actualizamos el estado de la ficha
             casilla = posFinal;
