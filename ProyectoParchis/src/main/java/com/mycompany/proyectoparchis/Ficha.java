@@ -15,13 +15,13 @@ public class Ficha {
     private Tablero tablero;
     
     private Color color;
-    private int casilla;
+    private int casilla = 0;
     private boolean enCasa;
     private boolean ganar=false;
     private boolean comible;
     private boolean estaPasillo=false;
     
-    //private Casa casa;
+    private Casa casa;
 
     public Ficha(Color color, Tablero tablero) { // cada vez que creamos una ficha está en casa y no se puede comer
         this.tablero = tablero;
@@ -72,6 +72,23 @@ public class Ficha {
         this.comible = comible;
     }
     
+    public Ficha getFichaDeCasilla(int casillaOcupada) {
+        Ficha fichaAux = null;
+        if(tablero.getEstadoCasilla(casillaOcupada) == 1){
+            //Ya habremos comprobado antes que es esa casilla hay una unica ficha, porque es para la funcion comerFicha
+            for(int i=1; i<=68; i++){
+                if (casilla == casillaOcupada){
+                    fichaAux = new Ficha(tablero.getColorDeUnaFicha(casillaOcupada), tablero);
+                    fichaAux.setCasilla(casillaOcupada);
+                    fichaAux.setComible(true);
+                    fichaAux.setEnCasa(false);
+                    break;
+                }
+            }
+        }
+        return fichaAux;
+    }
+    
     public void sacarFichaDeCasa(int numJugador){
         enCasa = false;
         //casa.eliminarDeCasa(this);
@@ -117,7 +134,7 @@ public class Ficha {
                 mandarFichaACasa();//Significa que habra sacado 3 veces seguidad dados dobles.
             }
             int posFinal = nuevaPos(posInicial, posiciones);
-            if(comerFicha(posFinal)){
+            if(tablero.comerFicha(posFinal, getColor())){
                 tablero.quitarFichaDeCasilla(posInicial);
             }
             else{
@@ -142,21 +159,21 @@ public class Ficha {
     
     
     public void mandarFichaACasa(){
-        //casa.meterFichaEnACasa(this);
-        casilla = 0;
-        enCasa = true;
-        comible = false; 
+        casa.meterFichaEnACasa(this);
     }
     
+    /*
     public boolean comerFicha(int posicionFinal) {
-        if(tablero.getEstadoCasilla(posicionFinal) == 1 && tablero.getColorDeUnaFicha(posicionFinal).equals(getColor())){
-            mandarFichaACasa();
-            return true;
+        boolean comer = false;
+        if(tablero.getEstadoCasilla(posicionFinal) == 1 && !tablero.esSeguro(getCasilla()) ){
+            if(!tablero.getColorDeUnaFicha(posicionFinal).equals(getColor())){
+                Ficha fichaAux = tablero.getFichaDeCasilla(casilla);
+                fichaAux.mandarFichaACasa();
+                comer = true;
+            }
         }
-        else{
-            return false;
-        }
-    }
+        return comer;
+    }*/
     
     public int entra_pasillo (int numJugador, int posiciones) {
         int nueva_posicion = casilla+posiciones;

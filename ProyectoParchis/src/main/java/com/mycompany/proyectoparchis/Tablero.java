@@ -37,6 +37,34 @@ public class Tablero {
         }
         return seguro;
     }
+    
+    public Ficha getFichaDeCasilla(int casillaOcupada) {
+        Ficha fichaAux = null;
+        //Ya habremos comprobado antes que es esa casilla hay una unica ficha, porque es para la funcion comerFicha
+        for(int i=1; i<=68; i++){
+            if (i == casillaOcupada){
+                fichaAux = new Ficha(getColorDeUnaFicha(casillaOcupada), this);
+                fichaAux.setCasilla(casillaOcupada);
+                fichaAux.setComible(true);
+                fichaAux.setEnCasa(false);
+            }
+        }
+        return fichaAux;
+    }
+    
+    public boolean comerFicha(int posicionFinal, Color colorFichaMoviendo) {
+        boolean comer = false;
+        if(getEstadoCasilla(posicionFinal) == 1 && !esSeguro(posicionFinal) ){  //lo compruebo dos veces??? pq en ocuparCasilla tambien lo compruebo, pero no lo puedo quitar pq en moverFicha tambien utilizo sin comprobar
+            if(!getColorDeUnaFicha(posicionFinal).equals(colorFichaMoviendo)){
+                Ficha fichaAux = getFichaDeCasilla(posicionFinal);
+                fichaAux.mandarFichaACasa();
+                comer = true;
+            }
+        }
+        return comer;
+    }
+    
+    
 
     public void ocuparCasilla(int casilla, Color color){
         if (casillas[casilla]==0){
@@ -48,6 +76,7 @@ public class Tablero {
             posiciones.put(color, casilla);
         }else if((casillas[casilla]==1) && (!esSeguro(casilla))){
             //comerFicha
+            comerFicha(casilla, color);
             posiciones.put(color, casilla);
         }else{
             System.out.println("No se puede ocupar esta casilla");

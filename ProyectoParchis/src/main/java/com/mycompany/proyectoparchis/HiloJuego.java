@@ -66,8 +66,8 @@ public class HiloJuego implements Runnable {
             int posicionfinal = ficha.getCasilla() + tirada;
             Color colorPorSiAcaso = tablero.getColorDeUnaFicha(posicionfinal);
             ficha.moverFicha(jugador, ficha.getCasilla(), tirada);
-            if ((ficha.comerFicha(posicionfinal)) == true) {
-                ficha.mandarFichaACasa();
+            if ((tablero.comerFicha(posicionfinal,ficha.getColor())) == true) {
+                ficha.mandarFichaACasa();// esto ya lo hago en la funcion de comerFicha
                 for (PrintWriter writer : Servidor.getWriters()) {
                     writer.println(jugador.getNombre() + " ha comido a la ficha de color " + colorPorSiAcaso.toString()); //???? COMO INDICO A QUIEN COME
                 }

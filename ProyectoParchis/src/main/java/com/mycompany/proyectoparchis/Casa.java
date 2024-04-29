@@ -48,6 +48,9 @@ public class Casa {
     public void meterFichaEnACasa(Ficha ficha) {
         if (fichasEnCasa.size() < numFichas){
             fichasEnCasa.add(ficha);
+            ficha.setCasilla(0);
+            ficha.setEnCasa(true);
+            ficha.setComible(false);
         }
     }
     
