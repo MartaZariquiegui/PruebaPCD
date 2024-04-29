@@ -60,7 +60,7 @@ public class Servidor {
                 PrintWriter out = new PrintWriter(sockets.get(i).getOutputStream(), true);
                 writers.add(out);
             } //añado todos los jugadores como escritores
-            for (int rondas = 0; rondas < 2; rondas++) {
+            for (int rondas = 0; rondas < 5; rondas++) {
                 for (int i = 0; i < jugadores.size(); i++) {
                     Jugador jugador = jugadores.get(i);
                     Thread hiloJuego = new Thread(new HiloJuego(sockets.get(i), jugador, fichas.get(i), dados, casas.get(i)));

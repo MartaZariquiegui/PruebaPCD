@@ -104,20 +104,20 @@ public class Ficha {
         //casa.eliminarDeCasa(this);
         switch (numJugador) {
             case 1:
-                casilla = 4;
-                tablero.ocuparCasilla(4, this);
+                casilla = 5;
+                tablero.ocuparCasilla(5, this);
                 break;
             case 2:
-                casilla = 21;
-                tablero.ocuparCasilla(21, this);
+                casilla = 22;
+                tablero.ocuparCasilla(22, this);
                 break;
             case 3:
-                casilla = 38;
-                tablero.ocuparCasilla(38, this);
+                casilla = 39;
+                tablero.ocuparCasilla(39, this);
                 break;
             case 4:
-                casilla = 55;
-                tablero.ocuparCasilla(55, this);
+                casilla = 56;
+                tablero.ocuparCasilla(56, this);
                 break;
             default:
                 System.out.println("Jugador no válido");
@@ -137,12 +137,13 @@ public class Ficha {
     }
 
     public void moverFicha(Jugador jugador, int posInicial, int posiciones, int posPasillo) {
-        
+
         for (PrintWriter writer : Servidor.getWriters()) {
             writer.println("Moviendo la ficha... ");
         }
 
         int posFinal = nuevaPos(posInicial, posiciones);
+        
         if (estaPasillo == false && posFinal < jugador.getLimite()) {
             if (posiciones == 0) {
                 mandarFichaACasa();//Significa que habra sacado 3 veces seguidad dados dobles.
@@ -168,8 +169,6 @@ public class Ficha {
             System.out.println("¡Enhorabuena jugador " + jugador.getNombre() + " has ganado!");
         } else if (estaPasillo && posPasillo < 8) {
             System.out.println(jugador.getNombre() + " te faltan " + (8 - posPasillo) + " casillas para ganar");
-        } else {
-            mostrarDatos();
         }
     }
 
@@ -221,7 +220,7 @@ public class Ficha {
             }
         } else {
             for (PrintWriter writer : Servidor.getWriters()) {
-                writer.println("Casillas: " + casilla);
+                writer.println("Casilla: " + casilla);
             }
         }
     }
