@@ -37,21 +37,21 @@ public class Servidor {
             colores.add(color);
         }
         List<Socket> sockets = new ArrayList<>(); //lista para almacenar los sockets de los jugadores
-        
+
         try {
             ServerSocket serversocket = new ServerSocket(44444);
             for (int i = 0; i < 4; i++) {
                 System.out.println("Esperando jugadores...");
                 Socket jugadorsocket = serversocket.accept();
-                
+
                 sockets.add(jugadorsocket);
-                Ficha ficha = new Ficha(colores.get(i),tablero);
+                Ficha ficha = new Ficha(colores.get(i), tablero);
                 fichas.add(ficha);
                 tablero.meterClaveValor(ficha);
-                Casa casa = new Casa(1, colores.get(i),tablero);
+                Casa casa = new Casa(1, colores.get(i), tablero);
                 casas.add(casa);
-                
-                Thread hilojugador = new Thread(new HiloJugador(jugadorsocket, i, colores.get(i),tablero,ficha));
+
+                Thread hilojugador = new Thread(new HiloJugador(jugadorsocket, i, colores.get(i), tablero, ficha));
                 hilojugador.start();
                 hilojugador.join();
             }
@@ -63,7 +63,7 @@ public class Servidor {
             for (int rondas = 0; rondas < 2; rondas++) {
                 for (int i = 0; i < jugadores.size(); i++) {
                     Jugador jugador = jugadores.get(i);
-                    Thread hiloJuego = new Thread(new HiloJuego(sockets.get(i), jugador, fichas.get(i),dados,casas.get(i)));
+                    Thread hiloJuego = new Thread(new HiloJuego(sockets.get(i), jugador, fichas.get(i), dados, casas.get(i)));
                     hiloJuego.start();
                     hiloJuego.join();
                 }
@@ -102,6 +102,6 @@ public class Servidor {
 
     public static void setFichas(List<Ficha> fichas) {
         Servidor.fichas = fichas;
-        }
-    
+    }
+
 }

@@ -4,6 +4,8 @@
  */
 package com.mycompany.proyectoparchis;
 
+import java.io.PrintWriter;
+
 /**
  *
  * @author martazariquiegui
@@ -79,8 +81,6 @@ public class Ficha {
     public void setPosPasillo(int posPasillo) {
         this.posPasillo = posPasillo;
     }
-    
-    
 
     public Ficha getFichaDeCasilla(int casillaOcupada) {
         Ficha fichaAux = null;
@@ -137,9 +137,13 @@ public class Ficha {
     }
 
     public void moverFicha(Jugador jugador, int posInicial, int posiciones, int posPasillo) {
+        
+        for (PrintWriter writer : Servidor.getWriters()) {
+            writer.println("Moviendo la ficha... ");
+        }
 
-        int posFinal = nuevaPos(posInicial,posiciones);
-        if (estaPasillo == false && posFinal<jugador.getLimite()) {
+        int posFinal = nuevaPos(posInicial, posiciones);
+        if (estaPasillo == false && posFinal < jugador.getLimite()) {
             if (posiciones == 0) {
                 mandarFichaACasa();//Significa que habra sacado 3 veces seguidad dados dobles.
             }
@@ -149,22 +153,22 @@ public class Ficha {
             //actualizamos el estado de la ficha
             casilla = posFinal;
             comible = !tablero.esSeguro(casilla);
-            if (vaAComer(posFinal)){
-                System.out.println("El jugador ha comido una ficha y avanza 20 casillas");
-                moverFicha(jugador, posFinal, 20, posPasillo);
-            }
-        } else if(estaPasillo == false && posFinal>jugador.getLimite()){ //si esta en pasillo
-            posPasillo = entra_pasillo(jugador.getNumero(),posFinal);
+//            if (vaAComer(posFinal)) {
+//                System.out.println("El jugador ha comido una ficha y avanza 20 casillas");
+//                moverFicha(jugador, posFinal, 20, posPasillo);
+//            }
+        } else if (estaPasillo == false && posFinal > jugador.getLimite()) { //si esta en pasillo
+            posPasillo = entra_pasillo(jugador.getNumero(), posFinal);
             estaPasillo = true;
-        } else{
-            posPasillo+=posiciones;
+        } else {
+            posPasillo += posiciones;
         }
-        
-        if (estaPasillo && posPasillo>=8){
+
+        if (estaPasillo && posPasillo >= 8) {
             System.out.println("¡Enhorabuena jugador " + jugador.getNombre() + " has ganado!");
-        }else if(estaPasillo && posPasillo<8){
-            System.out.println(jugador.getNombre() + " te faltan " + (8-posPasillo) + " casillas para ganar");
-        }else{
+        } else if (estaPasillo && posPasillo < 8) {
+            System.out.println(jugador.getNombre() + " te faltan " + (8 - posPasillo) + " casillas para ganar");
+        } else {
             mostrarDatos();
         }
     }
@@ -172,9 +176,9 @@ public class Ficha {
     public void mandarFichaACasa() {
         casa.meterFichaEnACasa(this);
     }
-    
-    public boolean vaAComer(int posicion){
-        return tablero.getEstadoCasilla(posicion)==1;
+
+    public boolean vaAComer(int posicion) {
+        return tablero.getEstadoCasilla(posicion) == 1;
     }
 
     public int entra_pasillo(int numJugador, int nueva_posicion) {
@@ -208,11 +212,17 @@ public class Ficha {
     }
 
     public void mostrarDatos() {
-        System.out.println("Color: " + getColor());
+        for (PrintWriter writer : Servidor.getWriters()) {
+            writer.println("Color: " + getColor());
+        }
         if (casilla == 0) {
-            System.out.println("Casilla: La ficha está en casa");
+            for (PrintWriter writer : Servidor.getWriters()) {
+                writer.println("Casilla: La ficha está en casa");
+            }
         } else {
-            System.out.println("Casillas: " + casilla);
+            for (PrintWriter writer : Servidor.getWriters()) {
+                writer.println("Casillas: " + casilla);
+            }
         }
     }
 

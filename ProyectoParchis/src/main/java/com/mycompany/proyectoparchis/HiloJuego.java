@@ -31,7 +31,7 @@ public class HiloJuego implements Runnable {
     @Override
     public void run() {
         for (PrintWriter writer : Servidor.getWriters()) {
-            writer.println("Es el turno de " + jugador.getNombre());
+            writer.println("\nEs el turno de " + jugador.getNombre());
         }
         int[] tiradaseparada = dados.tirada_separada(); 
         int tirada = tiradaseparada[0]+tiradaseparada[1];

@@ -35,12 +35,13 @@ public class Casa {
     }
     
     public boolean casaVacia() {
-        return fichasEnCasa.isEmpty();
+        return (numFichas==0);
     }
     
     public void eliminarDeCasa(Ficha ficha){
         if(!casaVacia()){
             fichasEnCasa.remove(ficha);
+            numFichas--;
         }
     }
     
