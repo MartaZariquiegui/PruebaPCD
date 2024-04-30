@@ -141,7 +141,7 @@ public class Ficha {
         return posicionFinal;
     }
 
-    public void moverFicha(Jugador jugador, int posInicial, int posiciones, int posPasillo) {
+    public void moverFicha(Jugador jugador, int posInicial, int posiciones) {
 
         for (PrintWriter writer : Servidor.getWriters()) {
             writer.println("Moviendo la ficha... ");
@@ -165,6 +165,10 @@ public class Ficha {
 //                moverFicha(jugador, posFinal, 20, posPasillo);
 //            }
         } else if (estaPasillo == false && posAcumulada > jugador.getLimite()) { //si esta en pasillo
+            for (PrintWriter writer : Servidor.getWriters()) {
+                writer.println(posAcumulada);
+                writer.println("El jugador ha entrado al pasillo");
+            }
             posPasillo = entra_pasillo(jugador.getNumero(), posFinal);
             estaPasillo = true;
         } else {
