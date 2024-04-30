@@ -24,7 +24,8 @@ public class Servidor {
     private static List<Ficha> fichas = Collections.synchronizedList(new ArrayList<>());
     private static List<Casa> casas = Collections.synchronizedList(new ArrayList<>());
     private static Set<PrintWriter> writers = new CopyOnWriteArraySet<>();
-
+    
+    private static boolean partidaAcabada = false;
     /**
      * @param args the command line arguments
      */
@@ -60,7 +61,7 @@ public class Servidor {
                 PrintWriter out = new PrintWriter(sockets.get(i).getOutputStream(), true);
                 writers.add(out);
             } //añado todos los jugadores como escritores
-            for (int rondas = 0; rondas < 5; rondas++) {
+            while(!partidaAcabada) {
                 for (int i = 0; i < jugadores.size(); i++) {
                     Jugador jugador = jugadores.get(i);
                     Thread hiloJuego = new Thread(new HiloJuego(sockets.get(i), jugador, fichas.get(i), dados, casas.get(i)));
@@ -102,6 +103,14 @@ public class Servidor {
 
     public static void setFichas(List<Ficha> fichas) {
         Servidor.fichas = fichas;
+    }
+
+    public static boolean isPartidaAcabada() {
+        return partidaAcabada;
+    }
+
+    public static void setPartidaAcabada(boolean partidaAcabada) {
+        Servidor.partidaAcabada = partidaAcabada;
     }
 
 }

@@ -65,6 +65,5 @@ public class HiloJuego implements Runnable {
         if (casa.casaVacia()){
             ficha.moverFicha(jugador, ficha.getCasilla(), tirada, ficha.getPosPasillo());           
         }
-        ficha.mostrarDatos();
     }
 }
