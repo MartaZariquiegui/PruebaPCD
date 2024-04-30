@@ -156,7 +156,7 @@ public class Ficha {
                 mandarFichaACasa();//Significa que habra sacado 3 veces seguidad dados dobles.
             }
             //actualizamos el estado del tablero
-            tablero.ocuparCasilla(posFinal, this); //ya actualiza la posicion del color
+            tablero.ocuparCasilla(posFinal%68, this); //ya actualiza la posicion del color
             tablero.quitarFichaDeCasilla(posInicial); //en la función no movemos el color porque se hace en ocuparCasilla
             //actualizamos el estado de la ficha
             casilla = posFinal;
