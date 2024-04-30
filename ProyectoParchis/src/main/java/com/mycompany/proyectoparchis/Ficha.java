@@ -148,7 +148,8 @@ public class Ficha {
         }
 
         int posFinal = nuevaPos(posInicial, posiciones) % 68;
-        posAcumulada = nuevaPos(posInicial, posiciones);
+        posAcumulada = nuevaPos(posAcumulada, posiciones);
+        
 
         if (estaPasillo == false && posAcumulada < jugador.getLimite()) {
             if (posiciones == 0) {
@@ -164,9 +165,8 @@ public class Ficha {
 //                System.out.println("El jugador ha comido una ficha y avanza 20 casillas");
 //                moverFicha(jugador, posFinal, 20, posPasillo);
 //            }
-        } else if (estaPasillo == false && posAcumulada > jugador.getLimite()) { //si esta en pasillo
+        } else if (estaPasillo == false && posAcumulada >= jugador.getLimite()) { //si esta en pasillo
             for (PrintWriter writer : Servidor.getWriters()) {
-                writer.println(posAcumulada);
                 writer.println("El jugador ha entrado al pasillo");
             }
             posPasillo = entra_pasillo(jugador.getNumero(), posFinal);
@@ -200,27 +200,27 @@ public class Ficha {
     public int entra_pasillo(int numJugador, int nueva_posicion) {
         switch (numJugador) {
             case 1:
-                if (nueva_posicion > 67) {
+                if (nueva_posicion > 68) {
                     estaPasillo = true;
-                    nueva_posicion = nueva_posicion - 67;
+                    nueva_posicion = nueva_posicion - 68;
                 }
                 break;
             case 2:
-                if (nueva_posicion > 50) {
+                if (nueva_posicion > 17) {
                     estaPasillo = true;
-                    nueva_posicion = nueva_posicion - 50;
+                    nueva_posicion = nueva_posicion - 17;
                 }
                 break;
             case 3:
-                if (nueva_posicion > 33) {
+                if (nueva_posicion > 34) {
                     estaPasillo = true;
-                    nueva_posicion = nueva_posicion - 33;
+                    nueva_posicion = nueva_posicion - 34;
                 }
                 break;
             case 4:
-                if (nueva_posicion > 16) {
+                if (nueva_posicion > 51) {
                     estaPasillo = true;
-                    nueva_posicion = nueva_posicion - 16;
+                    nueva_posicion = nueva_posicion - 51;
                 }
                 break;
         }
