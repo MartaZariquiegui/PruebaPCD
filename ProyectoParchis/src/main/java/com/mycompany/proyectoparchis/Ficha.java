@@ -19,7 +19,7 @@ public class Ficha {
     private int casilla = 0;
     private boolean enCasa;
     private boolean ganar = false;
-    private boolean comible;
+    private boolean comible=true;
     private boolean estaPasillo;
     private int posPasillo;
     private int posAcumulada = 0;
@@ -147,7 +147,7 @@ public class Ficha {
             writer.println("Moviendo la ficha... ");
         }
 
-        int posFinal = nuevaPos(posInicial, posiciones) % 68;
+/*CAMBIO*/ int posFinal = nuevaPos(posInicial, posiciones);
         posAcumulada = nuevaPos(posAcumulada, posiciones);
         
 
@@ -156,24 +156,46 @@ public class Ficha {
                 mandarFichaACasa();//Significa que habra sacado 3 veces seguidad dados dobles.
             }
             //actualizamos el estado del tablero
-            tablero.ocuparCasilla(posFinal%68, this); //ya actualiza la posicion del color
+/*          tablero.ocuparCasilla(posFinal, this); //ya actualiza la posicion del color
             tablero.quitarFichaDeCasilla(posInicial); //en la función no movemos el color porque se hace en ocuparCasilla
             //actualizamos el estado de la ficha
-            casilla = posFinal;
-            comible = !tablero.esSeguro(casilla);
+            casilla = posFinal;*/
+/*CAMBIO*/  if (comible =! tablero.esSeguro(casilla)) {
+                for (PrintWriter writer : Servidor.getWriters()) {
+                    writer.println("El jugador ha comido una ficha y avanza 20 casillas... ");
+                }
+                moverFicha(jugador, posInicial, 20);
+                posAcumulada=20;
+                if (posAcumulada >= jugador.getLimite()) { //si sumando 20 entra en el pasillo
+                    for (PrintWriter writer : Servidor.getWriters()) {
+                        writer.println("El jugador ha entrado al pasillo");
+                    }
+                    posFinal=posInicial+20;
+                    posPasillo = entra_pasillo(jugador.getNumero(), posFinal);
+                    estaPasillo=true;
+                } else {
+                    
+                }
+            }
 //            if (vaAComer(posFinal)) {
 //                System.out.println("El jugador ha comido una ficha y avanza 20 casillas");
 //                moverFicha(jugador, posFinal, 20, posPasillo);
 //            }
-        } else if (estaPasillo == false && posAcumulada >= jugador.getLimite()) { //si esta en pasillo
+        } else if (estaPasillo == false && posAcumulada >= jugador.getLimite()) { //si NO esta en pasillo Y VA A ENTRAR
             for (PrintWriter writer : Servidor.getWriters()) {
                 writer.println("El jugador ha entrado al pasillo");
             }
             posPasillo = entra_pasillo(jugador.getNumero(), posFinal);
             estaPasillo = true;
-        } else {
+        } else { //YA ESTA EN EL PASILLO
             posPasillo += posiciones;
         }
+        
+/*CAMBIO*/  tablero.ocuparCasilla(posFinal, this); //ya actualiza la posicion del color
+            tablero.quitarFichaDeCasilla(posInicial); //en la función no movemos el color porque se hace en ocuparCasilla
+            //actualizamos el estado de la ficha
+            casilla = posFinal;
+
 
         if (estaPasillo && posPasillo >= 8) {
             for (PrintWriter writer : Servidor.getWriters()) {
